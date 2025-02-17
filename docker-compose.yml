@@ -1,0 +1,50 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hend
+    container_name: hend-container
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - hend_api_network
+
+  hend-webserver:
+    image: nginx:alpine
+    container_name: hend-nginx
+    restart: unless-stopped
+    ports:
+     - "8000:80"
+     - "4333:443"
+    volumes:
+     - .:/var/www
+     - ./docker/nginx/conf.d:/etc/nginx/conf.d
+     - ./docker/nginx/certs:/etc/nginx/certs
+    networks:
+     - hend_api_network
+
+  hend-mysql-host:
+    image: mysql:8.0
+    container_name: hend-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: hend_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: hend_user
+      MYSQL_PASSWORD: hend_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/dbdata:/var/lib/mysql
+    networks:
+      - hend_api_network
+
+networks:
+    hend_api_network:
+
+volumes:
+  dbdata:
