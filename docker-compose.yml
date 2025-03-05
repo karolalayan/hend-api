@@ -37,9 +37,10 @@ services:
       MYSQL_USER: hend_user
       MYSQL_PASSWORD: hend_pass
     ports:
-      - "3306:3306"
+      - "6015:3306"
     volumes:
       - ./docker/dbdata:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - hend_api_network
 
