@@ -1,5 +1,5 @@
 <?php
-
+die('asdasd');
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
