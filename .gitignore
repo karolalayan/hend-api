@@ -29,3 +29,5 @@ Homestead.json
 .phpactor.json
 auth.json
 /docker/dbdata
+/docker/nginx/certs/*.key
+/docker/nginx/certs/*.crt
